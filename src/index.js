@@ -10,4 +10,7 @@ app.listen(PORT, () => {
     console.log(`✅ ${PORT}번 포트에 서버 연결됨`);
 });
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 
