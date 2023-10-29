@@ -105,3 +105,14 @@ export const postLogin = async (req, res) => {
     }
 };
 
+export const getLogout = async (req, res) => {
+    try {
+        req.session.destroy();
+        return res.redirect("/");
+    } catch (errorMessage) {
+        return res.status(400).render("home", {
+            pageTitle: "에러",
+            errorMessage,
+        });
+    }
+};
