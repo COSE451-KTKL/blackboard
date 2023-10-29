@@ -1,3 +1,3 @@
 export const getHome = async (req, res) => {
-    res.send("HOME");
+    res.render("home", { pageTitle: "Home" });
 };

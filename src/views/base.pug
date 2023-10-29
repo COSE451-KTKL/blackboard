@@ -1,0 +1,11 @@
+doctype html
+html(lang="en")
+    head
+        title #{pageTitle}
+        link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+        block headContent
+    body            
+        main
+            if errorMessage 
+                h3(style="color:red")=errorMessage
+            block content
