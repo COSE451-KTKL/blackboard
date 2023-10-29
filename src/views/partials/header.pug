@@ -1,0 +1,22 @@
+header
+    nav
+        ul
+            li
+                a(href="/") 홈
+            if isLoggedIn
+                li
+                    a(href="/auth/logout") 로그아웃
+                li
+                    if loggedInUser.userType === "student"
+                        span 로그인 된 계정: #{loggedInUser.name} 학생
+                    else
+                        span 로그인 된 계정: #{loggedInUser.name} 교수님
+            else
+                li
+                    a(href="/auth/login") 로그인
+                li
+                    a(href="/auth/signup") 회원가입
+
+
+
+            

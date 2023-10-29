@@ -4,7 +4,8 @@ html(lang="en")
         title #{pageTitle}
         link(rel="stylesheet" href="https://unpkg.com/mvp.css")
         block headContent
-    body            
+    body      
+        include partials/header        
         main
             if errorMessage 
                 h3(style="color:red")=errorMessage
