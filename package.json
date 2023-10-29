@@ -1,0 +1,19 @@
+{
+  "name": "ktkl",
+  "version": "1.0.0",
+  "description": "COSE451 project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/COSE451-KTKL/blackboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/COSE451-KTKL/blackboard/issues"
+  },
+  "homepage": "https://github.com/COSE451-KTKL/blackboard#readme"
+}
