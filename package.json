@@ -1,22 +1,22 @@
 {
-  "name": "ktkl",
-  "version": "1.0.0",
-  "description": "COSE451 project",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/COSE451-KTKL/blackboard.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/COSE451-KTKL/blackboard/issues"
-  },
-  "homepage": "https://github.com/COSE451-KTKL/blackboard#readme",
-      "dependencies": {
+    "name": "ktkl",
+    "version": "1.0.0",
+    "description": "COSE451 project",
+    "main": "index.js",
+    "scripts": {
+        "start_server": "nodemon --exec babel-node src/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/COSE451-KTKL/blackboard.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/COSE451-KTKL/blackboard/issues"
+    },
+    "homepage": "https://github.com/COSE451-KTKL/blackboard#readme",
+    "dependencies": {
         "bcrypt": "^5.0.1",
         "connect-mongo": "^4.4.1",
         "dotenv": "^8.2.0",
