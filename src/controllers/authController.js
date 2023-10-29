@@ -66,3 +66,14 @@ export const postSignup = async (req, res) => {
         });
     }
 };
+
+export const getLogin = (req, res) => {
+    try {
+        return res.render("login", { pageTitle: "로그인" });
+    } catch (errorMessage) {
+        return res
+            .status(400)
+            .render("login", { pageTitle: "에러", errorMessage });
+    }
+};
+
