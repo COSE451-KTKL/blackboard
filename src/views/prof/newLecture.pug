@@ -1,0 +1,8 @@
+extends ../base.pug
+
+block content
+    h2 강의 개설
+    form(method="POST")
+        label(for="lectureName") 강의명
+        input(type="text", name="lectureName", id="lectureName", placeholder="강의명을 입력하세요", required)
+        input(type="submit", value="강의 개설")
