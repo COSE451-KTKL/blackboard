@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import "./config/db";
+import rootRouter from "./routers/rootRouter";
 
 const app = express();
 
@@ -14,3 +15,5 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
+
+app.use("/", rootRouter);
