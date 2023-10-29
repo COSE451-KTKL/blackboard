@@ -1,0 +1,16 @@
+extends ../base.pug
+
+block content
+    if lectures
+        if lectures.length === 0
+            h3(style="color:red") 등록된 강의가 없습니다. 강의를 개설해주세요.
+        else
+            h2 개설된 강의 목록
+            ul
+            each lecture in lectures
+                li
+                    a(href=`/prof/lecture/${lecture._id}`)= lecture.lectureName
+                    br
+                    br
+            hr
+        a(href="lecture/newLecture") 새로운 강의 추가
