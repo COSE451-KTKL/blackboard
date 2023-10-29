@@ -1,0 +1,44 @@
+extends ../base.pug
+block headContent
+    script(src="https://cdn.quilljs.com/1.3.6/quill.js")
+    link(rel="stylesheet", href="https://cdn.quilljs.com/1.3.6/quill.snow.css")
+    style.
+      html, body {
+        margin-left: 3%;
+      }
+      #editor {
+        height: 300px;
+      }
+    script.
+        document.addEventListener("DOMContentLoaded", function() {
+          const quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+              toolbar: [
+                [{ header: [1, 2, false] }],
+                ['bold', 'italic', 'underline'],
+                [{ color: [] }, { background: [] }]
+              ]
+            }
+          });
+        });
+          
+        const sendNoticeContent = async () => {
+            const content = document.querySelector('#editor > div > p').innerHTML;
+            
+            const url = window.location.href;
+            const segments = url.split('/');
+            const lectureId = segments[segments.length - 1];
+
+            const contentInput = document.querySelector('#noticeForm > #content');
+            contentInput.value = content;
+            return true;
+        }
+
+block content
+  if lectureId
+    h2 게시물 등록
+    div(id="editor")
+    form(method="POST", id="noticeForm", onsubmit="return sendNoticeContent();")
+      input(type="hidden", id="content", name="content")
+      input(type="submit", value="게시물 등록")
