@@ -1,0 +1,46 @@
+extends base.pug
+
+block headContent
+    script.
+        document.addEventListener("DOMContentLoaded", function() {
+            const noticeContentsNodeList = document.querySelectorAll('.forConvertToHtml')
+            const noticeContents = Array.from(noticeContentsNodeList);
+            const innerTexts = [];
+            for(let i = 0; i < noticeContents.length; i++) {
+                innerTexts.push(noticeContents[i].innerText);
+            }
+            const paragraphs = document.querySelectorAll('.noticeContent');
+            for(let i = 0; i < paragraphs.length; i++) {
+                paragraphs[i].innerHTML = innerTexts[i];
+            }
+        });
+
+
+
+block content
+    if lecture
+        h1 #{lecture.lectureName} 강의 페이지
+        hr
+        h2 게시물
+        if lecture.noticeIds.length === 0
+            if loggedInUser.userType === 'professor'
+                h3(style="color:red") 아직 게시물이 없습니다. 학생들을 위해 첫 게시물을 등록해주세요.
+            else
+                h3(style="color:red") 아직 게시물이 없습니다. 교수님께 문의하세요.
+        else
+            ul
+                each noticeId in lecture.noticeIds
+                    li
+                        span(class="forConvertToHtml", style="display:none")= noticeId.content
+                        h5 등록 시간: #{noticeId.createdAt}
+                        p(class="noticeContent") 
+                        hr
+        
+        if loggedInUser.userType === 'professor'
+            hr
+            a(href=`/prof/lecture/newNotice/${lecture._id}`) 새 게시물 등록하러 가기
+            br
+            br
+            a(href="/prof/lecture") 개설한 강의 목록 보러가기
+        else
+            a(href="/stu/lecture") 수강중인 강의 목록 보러가기
