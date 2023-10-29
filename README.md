@@ -1,14 +1,14 @@
 # COSE451 소프트웨어보안
 
 # Member
-김백규
-[![GitHub Badge](https://img.shields.io/badge/GitHub-181717?&logo=GitHub&logoColor=white&style=for-the-badge&link=https://github.com/centneuf0109)](https://github.com/centneuf0109)
-이혁준
-[![GitHub Badge](https://img.shields.io/badge/GitHub-181717?&logo=GitHub&logoColor=white&style=for-the-badge&link=https://github.com/newxxson)](https://github.com/newxxson)
-김한별
-[![GitHub Badge](https://img.shields.io/badge/GitHub-181717?&logo=GitHub&logoColor=white&style=for-the-badge&link=https://github.com/khan1652)](https://github.com/khan1652)
-Tang Siqi
-[![GitHub Badge](https://img.shields.io/badge/GitHub-181717?&logo=GitHub&logoColor=white&style=for-the-badge&link=https://github.com/NinaT926)](https://github.com/NinaT926)
+- **김백규**  
+    [![GitHub Badge](https://img.shields.io/badge/GitHub-181717?&logo=GitHub&logoColor=white&style=for-the-badge&link=https://github.com/centneuf0109)](https://github.com/centneuf0109)
+- **이혁준**  
+    [![GitHub Badge](https://img.shields.io/badge/GitHub-181717?&logo=GitHub&logoColor=white&style=for-the-badge&link=https://github.com/newxxson)](https://github.com/newxxson)
+- **김한별**  
+    [![GitHub Badge](https://img.shields.io/badge/GitHub-181717?&logo=GitHub&logoColor=white&style=for-the-badge&link=https://github.com/khan1652)](https://github.com/khan1652)
+- **Tang Siqi**  
+    [![GitHub Badge](https://img.shields.io/badge/GitHub-181717?&logo=GitHub&logoColor=white&style=for-the-badge&link=https://github.com/NinaT926)](https://github.com/NinaT926)
 
 ## 커밋 규칙
 
