@@ -1,0 +1,22 @@
+extends base.pug
+
+block content
+    h2 회원가입
+    form(method="POST")
+        label(for="id") 아이디
+        input(placeholder="아이디", id = "id", name="id", type="text", required)
+        label(for="pw") 비밀번호
+        input(placeholder="비밀번호", id = "pw",name="pw", type="text", required)
+        label(for="id") 이름
+        input(placeholder="이름", id = "name", name="name", type="text", required)
+        fieldset
+            legend 유저 타입을 선택하세요
+            div
+                input(type="radio" id="professor" name="userType" value="professor")
+                label(for="professor") 교수님
+            div
+                input(type="radio" id="student" name="userType" value="student")
+                label(for="student") 학생
+        label(for="id") 학번
+        input(placeholder="학생 회원인 경우에만 입력하세요", id = "stuId", name="stuId", type="text")
+        input(type="submit", name="signup", value="회원가입")
