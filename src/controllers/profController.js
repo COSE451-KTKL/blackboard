@@ -18,3 +18,15 @@ export const getAllLectures = async (req, res) => {
         });
     }
 };
+
+export const getNewLecture = async (req, res) => {
+    try {
+        return res.render("prof/newLecture.pug", { pageTitle: "강의 개설" });
+    } catch (errorMessage) {
+        return res.status(400).render("prof/newLecture.pug", {
+            pageTitle: "에러",
+            errorMessage,
+        });
+    }
+};
+
