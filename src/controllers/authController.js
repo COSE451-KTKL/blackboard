@@ -77,3 +77,31 @@ export const getLogin = (req, res) => {
     }
 };
 
+export const postLogin = async (req, res) => {
+    try {
+        const { id, pw } = req.body;
+        const user = await User.findOne({ id });
+        if (!user) {
+            return res.status(400).render("login", {
+                pageTitle: "로그인",
+                errorMessage: "계정이 존재하지 않습니다. 다시 시도해주세요.",
+            });
+        }
+        const ok = await bcrypt.compare(pw, user.pw);
+        if (!ok) {
+            return res.status(400).render("login", {
+                pageTitle: "로그인",
+                errorMessage:
+                    "비밀번호가 올바르지 않습니다. 다시 시도해주세요.",
+            });
+        }
+        loginUserToSession(req, user);
+        return res.redirect("/");
+    } catch (errorMessage) {
+        return res.status(400).render("login", {
+            pageTitle: "에러",
+            errorMessage,
+        });
+    }
+};
+
