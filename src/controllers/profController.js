@@ -69,7 +69,7 @@ export const postNewLecture = async (req, res) => {
 export const getOneLecture = async (req, res) => {
     try {
         const lectureId = req.params.id;
-        const lecture = await Lecture.findById(lectureId).populate("noticeIds").populate("quizIds");
+        const lecture = await Lecture.findById(lectureId).populate("noticeIds").populate("quizId");
         return res.render("lectureDetail.pug", {
             pageTitle: `${lecture.lectureName}`,
             lecture,
@@ -135,6 +135,14 @@ export const postOneNotice = async (req, res) => {
 
 export const getNewQuiz = async (req, res) => { 
     try {
+        const lectureId = req.params.id;
+        const lecture = Lecture.findById(lectureId);
+        if (lecture.quizId) {
+            return res.render("lectureDetail.pug", {
+                pageTitle: `${lecture.lectureName}`,
+                errorMessage: "이미 퀴즈가 등록되어 있습니다.",
+            });
+        }
         return res.render("prof/newQuiz.pug", {
             pageTitle: "퀴즈 등록",
         });
@@ -151,21 +159,19 @@ export const postOneQuiz = async (req, res) => {
         const lectureId = req.params.id;
         const { quizProblem, quizAnswer } = req.body;
         const lecture = await Lecture.findById(lectureId);
-        const { quizIds } = lecture;
         const newQuiz = await Quiz.create({
             lectureId,
             quizProblem,
             quizAnswer,
         });
         const newQuizId = newQuiz._id;
-        if (!quizIds.includes(newQuizId)) {
-            await quizIds.push(newQuizId);
-        }
+
+        lecture.quizId = newQuizId;
         await Lecture.findByIdAndUpdate(lectureId, {
-            quizIds,
+            quizId : newQuizId,
         });
         const newLecture = await Lecture.findById(lectureId).populate(
-            "quizIds"
+            "quizId"
         );
         res.locals.lecture = newLecture;
         return res.render("lectureDetail.pug", {
