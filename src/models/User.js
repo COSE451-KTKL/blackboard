@@ -1,6 +1,12 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 
+const gradeSchema = new mongoose.Schema({
+    lectureId: { type: mongoose.Schema.Types.ObjectId, ref: "Lecture" },
+    quizIds: { type: mongoose.Schema.Types.ObjectId, ref: "Quiz" },
+    grade: { type: Number, required: true },
+})
+
 const userSchema = new mongoose.Schema(
     {
         id: { type: String, required: true },
@@ -10,6 +16,7 @@ const userSchema = new mongoose.Schema(
         userType: { type: String, required: true },
         lectureIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Lecture" }],
         quizIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Quiz" }],
+        grade: [{type: gradeSchema, required: true}],
     },
     { timestamps: true }
 );
