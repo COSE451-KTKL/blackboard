@@ -132,3 +132,23 @@ export const postOneNotice = async (req, res) => {
         });
     }
 };
+
+export const getAllStudents = async (req, res) => {
+    try {
+        const loggedInUser = req.session.loggedInUser;
+        const { lectureIds } = loggedInUser;
+        const lectures = await Lecture.find({
+            _id: { $in: lectureIds },
+        }).populate("stuIds");
+        return res.render("prof/students.pug", {
+            pageTitle: "수강 학생 관리",
+            lectures,
+        });
+    } catch (errorMessage) {
+        return res.status(400).render("prof/students.pug", {
+            pageTitle: "에러",
+            lectures: null,
+            errorMessage,
+        });
+    }
+};
