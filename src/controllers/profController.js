@@ -98,3 +98,37 @@ export const getNewNotice = async (req, res) => {
         });
     }
 };
+
+export const postOneNotice = async (req, res) => {
+    try {
+        const lectureId = req.params.id;
+        const { content } = req.body;
+        const lecture = await Lecture.findById(lectureId);
+        const { noticeIds } = lecture;
+        const newNotice = await Notice.create({
+            lectureId,
+            content,
+        });
+        const newNoticeId = newNotice._id;
+        if (!noticeIds.includes(newNoticeId)) {
+            await noticeIds.push(newNoticeId);
+        }
+        await Lecture.findByIdAndUpdate(lectureId, {
+            noticeIds,
+        });
+        const newLecture = await Lecture.findById(lectureId).populate(
+            "noticeIds"
+        );
+        res.locals.lecture = newLecture;
+        return res.render("lectureDetail.pug", {
+            pageTitle: `${lecture.lectureName}`,
+            lecture: newLecture,
+        });
+    } catch (errorMessage) {
+        return res.status(400).render("lectureDetail.pug", {
+            pageTitle: "에러",
+            lecture: null,
+            errorMessage,
+        });
+    }
+};
