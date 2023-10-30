@@ -97,4 +97,26 @@ export const getOneLecture = async (req, res) => {
     }
 };
 
-export const postOneQuiz = async (req, res) => {};
+export const postOneQuiz = async (req, res) => {
+        try {
+            const lectureId = req.params.id;
+            const lecture = await Lecture.findById(lectureId)
+                .populate("noticeIds")
+                .populate("quizId");
+            const stuQuizAnswer = req.body.quizAnswer;
+            const correctQuizAnswer = lecture.quizId.quizAnswer;
+            let correctOrWrong = "";
+            if (stuQuizAnswer === correctQuizAnswer){correctOrWrong = "Correct! Refresh to retry" } else {correctOrWrong = "Wrong! Refresh to retry"}
+            return res.render("lectureDetail.pug", {
+                pageTitle: `${lecture.lectureName}`,
+                lecture,
+                correctOrWrong,
+            });
+        } catch (errorMessage) {
+            return res.status(400).render("lectureDetail", {
+                pageTitle: "에러",
+                lecture: null,
+                errorMessage,
+            });
+        }
+};
