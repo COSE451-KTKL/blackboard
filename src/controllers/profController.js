@@ -167,6 +167,7 @@ export const postOneQuiz = async (req, res) => {
         const newLecture = await Lecture.findById(lectureId).populate(
             "quizIds"
         );
+        res.locals.lecture = newLecture;
         return res.render("lectureDetail.pug", {
             pageTitle: `${lecture.lectureName}`,
             lecture: newLecture,
