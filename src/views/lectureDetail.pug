@@ -37,6 +37,7 @@ block content
                         hr
         
         if loggedInUser.userType === 'professor'
+            hr
             h2 퀴즈
             if lecture.quizIds.length === 0
                 if loggedInUser.userType === 'professor'
@@ -46,9 +47,10 @@ block content
             else
                 if loggedInUser.userType === 'professor'
                     h3 등록된 문제
-                    h3= lecture.quizIds[0].quizProblem
+                    p= lecture.quizIds[0].quizProblem
+                    br
                     h3 등록된 정답
-                    h3= lecture.quizIds[0].quizAnswer
+                    p= lecture.quizIds[0].quizAnswer
                 else
                     h3 문제
                     h3= lecture.quizIds[0].quizProblem
