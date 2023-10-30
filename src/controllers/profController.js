@@ -152,7 +152,7 @@ export const postOneQuiz = async (req, res) => {
         const { quizProblem, quizAnswer } = req.body;
         const lecture = await Lecture.findById(lectureId);
         const { quizIds } = lecture;
-        const newQuiz = await Notice.create({
+        const newQuiz = await Quiz.create({
             lectureId,
             quizProblem,
             quizAnswer,
