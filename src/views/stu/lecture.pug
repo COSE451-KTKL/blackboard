@@ -1,0 +1,16 @@
+extends ../base.pug
+
+block content
+    if lectures
+        if lectures.length === 0
+            h3(style="color:red") 수강중인 강의가 없습니다. 강의를 수강해주세요.
+        else
+            h2 수강중인 강의 목록
+            ul
+            each lecture in lectures
+                li
+                    a(href=`/stu/lecture/${lecture._id}`)= lecture.lectureName
+                    br
+                    br
+            hr
+        a(href="/stu/sugang") 수강신청하러 가기
