@@ -37,7 +37,7 @@ block content
                         hr
         hr
         h2 퀴즈
-        if lecture.quizIds.length === 0
+        if !lecture.quizId
             if loggedInUser.userType === 'professor'
                 h3(style="color:red") 아직 퀴즈가 없습니다. 학생들을 위해 퀴즈를 등록해주세요.
             else
@@ -45,13 +45,13 @@ block content
         else
             if loggedInUser.userType === 'professor'
                 h3 등록된 문제
-                p= lecture.quizIds[0].quizProblem
+                p= lecture.quizId.quizProblem
                 br
                 h3 등록된 정답
-                p= lecture.quizIds[0].quizAnswer
+                p= lecture.quizId.quizAnswer
             else
                 h3 문제
-                p= lecture.quizIds[0].quizProblem
+                p= lecture.quizId.quizProblem
                 form(method="POST")
                     input(type="text", name="quizAnswer", id="quizAnswer", placeholder="답안을 입력하세요", required)
                     input(type="submit", value="답안 제출")
@@ -59,8 +59,10 @@ block content
         if loggedInUser.userType === 'professor'
             a(href=`/prof/lecture/newNotice/${lecture._id}`) 새 게시물 등록하러 가기
             br
-            a(href=`/prof/lecture/newQuiz/${lecture._id}`) 퀴즈 등록하러 가기
-            hr
+            if lecture.quizId
+            else
+                a(href=`/prof/lecture/newQuiz/${lecture._id}`) 퀴즈 등록하러 가기
+            br
             br
             br
             a(href="/prof/lecture") 개설한 강의 목록 보러가기

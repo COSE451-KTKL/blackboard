@@ -6,7 +6,7 @@ const lectureSchema = new mongoose.Schema(
         stuIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
         lectureName: { type: String, required: true },
         noticeIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Notice" }],
-        quizIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Quiz" }],
+        quizId: {type: mongoose.Schema.Types.ObjectId, ref: "Quiz" },
     },
     { timestamps: true }
 );

@@ -56,7 +56,7 @@ export const postSignup = async (req, res) => {
             stuId,
             userType,
             lectureIds: [],
-            quizIds: [],
+            quizId: [],
             grade: [],
         });
         loginUserToSession(req, user);
