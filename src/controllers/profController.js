@@ -133,6 +133,18 @@ export const postOneNotice = async (req, res) => {
     }
 };
 
+export const getNewQuiz = async (req, res) => { 
+    try {
+        return res.render("prof/newQuiz.pug", {
+            pageTitle: "퀴즈 등록",
+        });
+    } catch (errorMessage) {
+        return res.status(400).render("prof/newQuiz.pug", {
+            pageTitle: "에러",
+            errorMessage,
+        });
+    }
+};
 export const getAllStudents = async (req, res) => {
     try {
         const loggedInUser = req.session.loggedInUser;
