@@ -96,3 +96,5 @@ export const getOneLecture = async (req, res) => {
         });
     }
 };
+
+export const postOneQuiz = async (req, res) => {};

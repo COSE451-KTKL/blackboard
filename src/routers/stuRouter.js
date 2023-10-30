@@ -13,7 +13,6 @@ const stuRouter = express.Router();
 
 stuRouter.route("/sugang").all(onlyIsLoggedIn).get(getSugang).post(postSugang);
 stuRouter.route("/lecture").all(onlyIsLoggedIn).get(getAllLectures);
-stuRouter.route("/lecture/:id").all(onlyIsLoggedIn).get(getOneLecture)
-    // .post(postOneQuiz);
+stuRouter.route("/lecture/:id").all(onlyIsLoggedIn).get(getOneLecture).post(postOneQuiz);
 
 export default stuRouter;
