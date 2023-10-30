@@ -35,29 +35,28 @@ block content
                         h5 등록 시간: #{noticeId.createdAt}
                         p(class="noticeContent") 
                         hr
-        
-        if loggedInUser.userType === 'professor'
-            hr
-            h2 퀴즈
-            if lecture.quizIds.length === 0
-                if loggedInUser.userType === 'professor'
-                        h3(style="color:red") 아직 퀴즈가 없습니다. 학생들을 위해 퀴즈를 등록해주세요.
-                else
-                    h3(style="color:red") 아직 퀴즈가 없습니다. 교수님께 문의하세요.
+        hr
+        h2 퀴즈
+        if lecture.quizIds.length === 0
+            if loggedInUser.userType === 'professor'
+                h3(style="color:red") 아직 퀴즈가 없습니다. 학생들을 위해 퀴즈를 등록해주세요.
             else
-                if loggedInUser.userType === 'professor'
-                    h3 등록된 문제
-                    p= lecture.quizIds[0].quizProblem
-                    br
-                    h3 등록된 정답
-                    p= lecture.quizIds[0].quizAnswer
-                else
-                    h3 문제
-                    h3= lecture.quizIds[0].quizProblem
-                    form(method="POST")
-                        input(type="text", name="quizAnswer", id="quizAnswer", placeholder="답안을 입력하세요", required)
-                        input(type="submit", value="답안 제출")
+                h3(style="color:red") 아직 퀴즈가 없습니다. 교수님께 문의하세요.
+        else
+            if loggedInUser.userType === 'professor'
+                h3 등록된 문제
+                p= lecture.quizIds[0].quizProblem
+                br
+                h3 등록된 정답
+                p= lecture.quizIds[0].quizAnswer
+            else
+                h3 문제
+                p= lecture.quizIds[0].quizProblem
+                form(method="POST")
+                    input(type="text", name="quizAnswer", id="quizAnswer", placeholder="답안을 입력하세요", required)
+                    input(type="submit", value="답안 제출")
             hr
+        if loggedInUser.userType === 'professor'
             a(href=`/prof/lecture/newNotice/${lecture._id}`) 새 게시물 등록하러 가기
             br
             a(href=`/prof/lecture/newQuiz/${lecture._id}`) 퀴즈 등록하러 가기
