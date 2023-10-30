@@ -82,3 +82,19 @@ export const getOneLecture = async (req, res) => {
         });
     }
 };
+
+export const getNewNotice = async (req, res) => {
+    try {
+        const lectureId = req.params.id;
+        return res.render("prof/newNotice.pug", {
+            pageTitle: "게시물 작성",
+            lectureId,
+        });
+    } catch (errorMessage) {
+        return res.status(400).render("prof/newNotice.pug", {
+            pageTitle: "에러",
+            errorMessage,
+            lectureId: null,
+        });
+    }
+};
