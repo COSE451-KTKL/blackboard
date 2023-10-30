@@ -145,6 +145,41 @@ export const getNewQuiz = async (req, res) => {
         });
     }
 };
+
+export const postOneQuiz = async (req, res) => {
+    try {
+        const lectureId = req.params.id;
+        const { quizProblem, quizAnswer } = req.body;
+        const lecture = await Lecture.findById(lectureId);
+        const { quizIds } = lecture;
+        const newQuiz = await Notice.create({
+            lectureId,
+            quizProblem,
+            quizAnswer,
+        });
+        const newQuizId = newQuiz._id;
+        if (!quizIds.includes(newQuizId)) {
+            await quizIds.push(newQuizId);
+        }
+        await Lecture.findByIdAndUpdate(lectureId, {
+            quizIds,
+        });
+        const newLecture = await Lecture.findById(lectureId).populate(
+            "quizIds"
+        );
+        return res.render("lectureDetail.pug", {
+            pageTitle: `${lecture.lectureName}`,
+            lecture: newLecture,
+        });
+    } catch (errorMessage) {
+        return res.status(400).render("lectureDetail.pug", {
+            pageTitle: "에러",
+            lecture: null,
+            errorMessage,
+        });
+    }
+ };
+
 export const getAllStudents = async (req, res) => {
     try {
         const loggedInUser = req.session.loggedInUser;
