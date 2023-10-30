@@ -1,0 +1,33 @@
+extends ../base.pug
+
+block content
+    if lectures
+        h2 개설된 강의 목록
+        if lectures.length === 0
+            h3(style="color:red") 아직 개설된 강의가 없습니다. 교수님께 문의하세요.
+        else
+            table(border="1")
+                thead
+                    th  
+                    th 강의명
+                    th 교수명
+                tbody
+                    for lecture in lectures
+                        tr
+                            if sugangLectureIds.includes(lecture._id.toString())
+                                td 
+                                    h4(style="color:red") 수강중
+                            else
+                                td(style="padding: 0px")
+                                    form(method="POST" style="display:inline")
+                                        input(type="hidden" name="lectureId" value=lecture._id)
+                                        input(type="submit" value="수강신청")
+                                
+                            td
+                                a(href=`/stu/lecture/${lecture._id}`)= lecture.lectureName
+                            td
+                                h4=lecture.profId.name
+            
+            hr
+            a(href="/stu/lecture") 수강중인 강의 목록 보러 가기
+
