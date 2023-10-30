@@ -62,3 +62,20 @@ export const postSugang = async (req, res) => {
     }
 };
 
+export const getAllLectures = async (req, res) => {
+    try {
+        const loggedInUser = req.session.loggedInUser;
+        const lectureIds = loggedInUser.lectureIds;
+        const lectures = await Lecture.find({ _id: { $in: lectureIds } });
+        return res.render("stu/lecture", {
+            pageTitle: "수강중인 강의",
+            lectures,
+        });
+    } catch (errorMessage) {
+        return res.status(400).render("stu/lecture", {
+            pageTitle: "에러",
+            lectures: null,
+            errorMessage,
+        });
+    }
+};
