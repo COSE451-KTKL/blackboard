@@ -69,7 +69,7 @@ export const postNewLecture = async (req, res) => {
 export const getOneLecture = async (req, res) => {
     try {
         const lectureId = req.params.id;
-        const lecture = await Lecture.findById(lectureId).populate("noticeIds");
+        const lecture = await Lecture.findById(lectureId).populate("noticeIds").populate("quizIds");
         return res.render("lectureDetail.pug", {
             pageTitle: `${lecture.lectureName}`,
             lecture,
