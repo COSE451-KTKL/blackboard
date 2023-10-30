@@ -6,8 +6,8 @@ import {
     getOneLecture,
     getNewNotice,
     postOneNotice,
-    getNewQuiz,
-    postOneQuiz,
+    // getNewQuiz,
+    // postOneQuiz,
     getAllStudents,
 } from "../controllers/profController";
 import { onlyIsLoggedIn } from "../middleware";
@@ -25,11 +25,11 @@ profRouter
     .all(onlyIsLoggedIn)
     .get(getNewNotice)
     .post(postOneNotice);
-profRouter
-    .route("/lecture/newQuiz/:id")
-    .all(onlyIsLoggedIn)
-    .get(getNewQuiz)
-    .post(postOneQuiz);
+// profRouter
+//     .route("/lecture/newQuiz/:id")
+//     .all(onlyIsLoggedIn)
+//     .get(getNewQuiz)
+//     .post(postOneQuiz);
 profRouter.route("/lecture/:id").all(onlyIsLoggedIn).get(getOneLecture);
 profRouter
     .route("/student")
