@@ -1,0 +1,15 @@
+extends ../base.pug
+block content
+    h2  #{lecture.lectureName} 퀴즈 답안
+
+    if filenames.length != 0
+        each  item in filenames 
+            tr    
+                td
+                    h4=item.student.name  
+                td
+                    a(href=`/prof/lecture/gradeStudentSubmit/${lecture._id}/${item.student.stuId}`) #{item.filename}
+               
+    else 
+        h3(style="color:red") 아직 제출된 과제가 없습니다.
+        
