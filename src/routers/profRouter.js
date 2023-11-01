@@ -9,6 +9,9 @@ import {
   getNewQuiz,
   postOneQuiz,
   getAllStudents,
+  getLectureSubmits,
+  showStudentSubmit,
+  gradeStudentSubmit,
 } from "../controllers/profController";
 import { onlyIsLoggedIn, isProf } from "../middleware";
 
@@ -34,7 +37,15 @@ profRouter
   .get(getNewQuiz)
   .post(postOneQuiz);
 profRouter.route("/lecture/:id").get(getOneLecture);
-profRouter.route("/lecture/getStudentSubmit/:id").get();
 profRouter.route("/student").get(getAllStudents);
+//this is for prof to see all the submit for lecture
+profRouter
+  .route("/lecture/showLectureSubmits/:lectureId")
+  .get(getLectureSubmits);
+
+profRouter
+  .route("/lecture/gradeStudentSubmit/:lectureId/:stuId")
+  .get(showStudentSubmit)
+  .post(gradeStudentSubmit);
 
 export default profRouter;

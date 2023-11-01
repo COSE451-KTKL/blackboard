@@ -8,6 +8,21 @@ import {
   postOneQuiz,
 } from "../controllers/stuController";
 import { onlyIsLoggedIn, isStu } from "../middleware";
+import multer from "multer";
+import path from "path";
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const dir = "./uploads/temp";
+    cb(null, dir);
+  },
+  filename: function (req, file, cb) {
+    const unique = Date.now() + "_" + Math.round(Math.random() * 1000);
+    cb(null, "file_" + unique + ".txt");
+  },
+});
+
+const upload = multer({ storage: storage });
 
 const stuRouter = express.Router();
 
@@ -16,10 +31,10 @@ stuRouter.use(onlyIsLoggedIn, isStu);
 
 stuRouter.route("/sugang").get(getSugang).post(postSugang);
 stuRouter.route("/lecture").get(getAllLectures);
+//apply middelware to store the txt file to the uploads/temp
 stuRouter
   .route("/lecture/:id")
-
   .get(getOneLecture)
-  .post(postOneQuiz);
+  .post(upload.single("txtFile"), postOneQuiz);
 
 export default stuRouter;
