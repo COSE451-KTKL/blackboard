@@ -10,6 +10,7 @@ const updateLoggedInUser = async (req, user) => {
   return;
 };
 
+//returns all the filenames of the submitted files paired with student , grade
 const makeFileNames = async (lectureName, lectureId) => {
   try {
     const files = fs.readdirSync(path.join("./uploads", lectureName));
@@ -242,6 +243,7 @@ export const getAllStudents = async (req, res) => {
   }
 };
 
+//get all the submits for the lecture
 export const getLectureSubmits = async (req, res) => {
   try {
     const lectureId = req.params.lectureId;
@@ -266,6 +268,7 @@ export const getLectureSubmits = async (req, res) => {
   }
 };
 
+//show submit for particular student for lecture
 export const showStudentSubmit = async (req, res) => {
   try {
     const lectureId = req.params.lectureId;
@@ -298,6 +301,7 @@ export const showStudentSubmit = async (req, res) => {
   }
 };
 
+//grade the submit
 export const gradeStudentSubmit = async (req, res) => {
   try {
     const lectureId = req.params.lectureId;

@@ -47,16 +47,18 @@ block content
                 h3 등록된 문제
                 p= lecture.quizId.quizProblem
                 br
-                h3 등록된 정답
-                p= lecture.quizId.quizAnswer
+                a(href=`/prof/lecture/showLectureSubmits/${lecture._id}`) 퀴즈 채점하러 가기
             else
-                if correctOrWrong
-                    h3(style="color:red")=correctOrWrong
+                if submitted
+                    if grade.graded 
+                        h3(style="color:red")= `your grade: ${grade.grade}`
+                    if !grade.graded
+                        h3(style="color:red")="아직 채점되지 않았습니다"
                 else
                     h3 문제
                     p= lecture.quizId.quizProblem
-                    form(method="POST")
-                        input(type="text", name="quizAnswer", id="quizAnswer", placeholder="답안을 입력하세요", required)
+                    form(method="POST", enctype="multipart/form-data")
+                        input(type="file", name="txtFile", id="txtFile", placeholder="txt 파일을 제출하세요", required)
                         input(type="submit", value="답안 제출")
             hr
         if loggedInUser.userType === 'professor'
