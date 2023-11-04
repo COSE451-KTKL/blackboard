@@ -4,6 +4,7 @@ import Notice from "../models/Notice";
 import Quiz from "../models/Quiz";
 import fs from "fs";
 import path from "path";
+import { spawn } from "child_process";
 
 const updateLoggedInUser = async (req, user) => {
   req.session.loggedInUser = user;
@@ -157,6 +158,41 @@ export const postOneNotice = async (req, res) => {
     });
     const newLecture = await Lecture.findById(lectureId).populate("noticeIds");
     res.locals.lecture = newLecture;
+
+    const lectureName = lecture.lectureName;
+    const cfileDirectory = path.join(
+      "src",
+      "controllers",
+      "saveNotice",
+    );
+    const process = spawn(cfileDirectory, [content, lectureName, newNoticeId]);
+
+    const closeProcess = new Promise((resolve, reject) => {
+      process.on("close", (code) => {
+        if (code != 0) {
+          reject(new Error("Non-zero exit code"));
+        } else {
+          resolve();
+        }
+      });
+      process.stdout.on("data", (data) => {
+        console.log(`stdout: ${data}`);
+      });
+      process.stderr.on("data", (data) => {
+        console.error(`stderr: ${data}`);
+      });
+    });
+
+    try {
+      await closeProcess;
+    } catch (error) {
+      return res.status(400).render("lectureDetail", {
+        pageTitle: "에러",
+        lecture: null,
+        error,
+      });
+    }
+
     return res.render("lectureDetail.pug", {
       pageTitle: `${lecture.lectureName}`,
       lecture: newLecture,
