@@ -12,7 +12,7 @@ THIS C FILE IS THE ORIGINAL FILE OF THE saveQuizSubmit.exe
 THIS C FILE IS COMPILED WITHOUT THE COUNTERMEASURES FOR BUFFER OVERFLOW
 THIS C FILE ALSO HAS -g FLAG FOR HELPING DEBUGGING
 SHOULD YOU WISH TO RECREATE THE EXE FILE RUN
-gcc -fno-stack-protector -D_FORTIFY_SOURCE=0 -no-pie -z norelro -g saveQuizSubmit.c -o saveQuizSubmit.exe
+gcc -fno-stack-protector -D_FORTIFY_SOURCE=0 -no-pie -z norelro -g saveQuizSubmit.c -o saveQuizSubmit
 ALSO YOU SHOULD SET THE ASLR DISABLED.
 */
 
