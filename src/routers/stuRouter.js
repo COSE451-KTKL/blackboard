@@ -22,7 +22,15 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "text/plain") {
+    cb(null, true);
+  } else {
+    cb(new Error("Not a .txt file"), false);
+  }
+};
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 const stuRouter = express.Router();
 
