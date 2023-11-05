@@ -6,24 +6,13 @@
 #define BUF_SIZE 300
 #endif
 
-/*
-======NOTICE======
-THIS C FILE IS THE ORIGINAL FILE OF THE saveQuizSubmit.exe
-THIS C FILE IS COMPILED WITHOUT THE COUNTERMEASURES FOR BUFFER OVERFLOW
-THIS C FILE ALSO HAS -g FLAG FOR HELPING DEBUGGING
-SHOULD YOU WISH TO RECREATE THE EXE FILE RUN
-gcc -fno-stack-protector -D_FORTIFY_SOURCE=0 -no-pie -z norelro -g saveQuizSubmit.c -o saveQuizSubmit
-ALSO YOU SHOULD SET THE ASLR DISABLED.
-*/
-
-int load_to_lecture(char *submit_file_name, char *submit_text)
+int load_to_lecture(char *submit_file_directory, char *submit_text)
 {
     char buffer[BUF_SIZE];
     char file_directory[100];
-    /* The following statement has a buffer overflow problem */
     strcpy(buffer, submit_text);
 
-    snprintf(file_directory, sizeof(file_directory), "./uploads/%s", submit_file_name);
+    snprintf(file_directory, sizeof(file_directory), "./uploads/lectures/%s", submit_file_directory);
 
     // write the submitted text to a more organized filename foramt
     FILE *file = fopen(file_directory, "w");
@@ -52,14 +41,14 @@ int main(int argc, char *argv[])
     snprintf(file_location, sizeof(file_location), "./uploads/temp/%s", filename);
 
     // submit file_name => lectureName_studentId.txt
-    char submit_file_name[100];
-    snprintf(submit_file_name, sizeof(submit_file_name), "%s/%s_%s.txt", lecture_name, lecture_name, student_id);
-    printf("%s", submit_file_name);
+    char submit_file_directory[100];
+    snprintf(submit_file_directory, sizeof(submit_file_directory), "%s/quiz/%s_%s.txt", lecture_name, lecture_name, student_id);
+    printf("%s", submit_file_directory);
     file = fopen(file_location, "r");
     fread(submit_text, sizeof(char), 1000, file);
     fclose(file);
 
-    load_to_lecture(submit_file_name, submit_text);
+    load_to_lecture(submit_file_directory, submit_text);
 
     return 0;
 }
