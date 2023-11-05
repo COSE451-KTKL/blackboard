@@ -5,6 +5,8 @@ import Quiz from "../models/Quiz";
 import fs from "fs";
 import path from "path";
 import { spawn } from "child_process";
+import cFileController from "./cFileController";
+import profRouter from "../routers/profRouter";
 
 const updateLoggedInUser = async (req, user) => {
   req.session.loggedInUser = user;
@@ -14,25 +16,43 @@ const updateLoggedInUser = async (req, user) => {
 //returns all the filenames of the submitted files paired with student , grade
 const makeFileNames = async (lectureName, lectureId) => {
   try {
-    const files = fs.readdirSync(path.join("./uploads", lectureName));
-    const filenames = await Promise.all(
-      files
-        .filter((file) => file.endsWith(".txt"))
-        .map(async (file) => {
-          const filename = file.slice(0, -4);
-          const stuId = file.split("_")[1].split(".")[0];
-          const student = await User.findOne({ stuId: stuId });
+    const files = fs.readdirSync(
+      path.join("./uploads", "lectures", lectureName, "quiz")
+    );
+
+    const filePromises = files
+      .filter((file) => file.endsWith(".txt"))
+      .map(async (file) => {
+        const filename = file.slice(0, -4);
+        const stuId = file.split("_")[1].split(".")[0];
+        const student = await User.findOne({ stuId: stuId });
+        if (student) {
           const grade = student.grade.find(
             (grade) => grade.lectureId == lectureId
           );
           return { student, filename, grade };
-        })
+        } else return null;
+      });
+
+    const filenames = (await Promise.all(filePromises)).filter(
+      (result) => result !== null
     );
+
     return filenames;
   } catch (err) {
     console.error(err);
     return;
   }
+};
+
+const makeLectureDiretory = (lectureName) => {
+  const newDirectory = path.join("uploads", "lectures", lectureName);
+  fs.mkdirSync(newDirectory, { recursive: true });
+
+  const noticeDirectory = path.join(newDirectory, "notice");
+  const quizDirectory = path.join(newDirectory, "quiz");
+  fs.mkdirSync(noticeDirectory, { recursive: true });
+  fs.mkdirSync(quizDirectory, { recursive: true });
 };
 
 export const getAllLectures = async (req, res) => {
@@ -60,7 +80,6 @@ export const getNewLecture = async (req, res) => {
       pageTitle: "에러",
       errorMessage,
     });
-    x;
   }
 };
 
@@ -85,16 +104,7 @@ export const postNewLecture = async (req, res) => {
     const newUser = await User.findById(loggedInUser._id);
     await updateLoggedInUser(req, newUser);
     //makes a directory inside the uploads with the lectureName for submitting txt
-    const newDirectory = path.join("uploads", lectureName);
-    // const newDirectory = "./uploads";
-    console.log(newDirectory);
-
-    fs.mkdirSync(newDirectory, { recursive: true }, (err) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log("???");
-    });
+    makeLectureDiretory(lectureName);
 
     return res.redirect("/prof/lecture");
   } catch (errorMessage) {
@@ -161,31 +171,13 @@ export const postOneNotice = async (req, res) => {
     res.locals.lecture = newLecture;
 
     const lectureName = lecture.lectureName;
-    const cfileDirectory = path.join(
-      "src",
-      "controllers",
-      "saveNotice",
-    );
-    const process = spawn(cfileDirectory, [content, lectureName, newNoticeId]);
-
-    const closeProcess = new Promise((resolve, reject) => {
-      process.on("close", (code) => {
-        if (code != 0) {
-          reject(new Error("Non-zero exit code"));
-        } else {
-          resolve();
-        }
-      });
-      process.stdout.on("data", (data) => {
-        console.log(`stdout: ${data}`);
-      });
-      process.stderr.on("data", (data) => {
-        console.error(`stderr: ${data}`);
-      });
-    });
-
+    const cfileDirectory = path.join("src", "controllers", "saveNotice.exe");
     try {
-      await closeProcess;
+      await cFileController(cfileDirectory, [
+        content,
+        lectureName,
+        newNoticeId,
+      ]);
     } catch (error) {
       return res.status(400).render("lectureDetail", {
         pageTitle: "에러",
@@ -238,13 +230,31 @@ export const postOneQuiz = async (req, res) => {
       quizProblem,
       quizAnswer,
     });
+    const professor = req.session.loggedInUser.name;
     const newQuizId = newQuiz._id;
-
     lecture.quizId = newQuizId;
     await Lecture.findByIdAndUpdate(lectureId, {
       quizId: newQuizId,
     });
     const newLecture = await Lecture.findById(lectureId).populate("quizId");
+    const lectureName = newLecture.lectureName;
+    const cfileDirectory = path.join("src", "controllers", "saveProfQuiz.exe");
+    try {
+      await cFileController(cfileDirectory, [
+        lectureName,
+        professor,
+        quizProblem,
+        quizAnswer,
+      ]);
+      console.log("complete");
+    } catch (error) {
+      return res.status(400).render("lectureDetail", {
+        pageTitle: "에러",
+        lecture: null,
+        error,
+      });
+    }
+
     res.locals.lecture = newLecture;
     return res.render("lectureDetail.pug", {
       pageTitle: `${lecture.lectureName}`,
@@ -315,7 +325,9 @@ export const showStudentSubmit = async (req, res) => {
     const student = await User.findOne({ stuId: studentId });
     const filepath = path.join(
       "./uploads",
+      "lectures",
       lecture.lectureName,
+      "quiz",
       `${lecture.lectureName}_${studentId}.txt`
     );
 
@@ -342,11 +354,11 @@ export const gradeStudentSubmit = async (req, res) => {
   try {
     const lectureId = req.params.lectureId;
     const stuId = req.params.stuId;
-    const { profGrade } = req.body;
+    const { grading } = req.body;
     const student = await User.findOne({ stuId: stuId });
     const lecture = await Lecture.findById(lectureId);
     const grade = student.grade.find((grade) => grade.lectureId == lectureId);
-    grade.grade = profGrade;
+    grade.grade = grading;
     grade.graded = true;
     await student.save();
 
