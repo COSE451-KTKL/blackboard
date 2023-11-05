@@ -3,6 +3,7 @@ import User from "../models/User";
 import Quiz from "../models/Quiz";
 import { spawn } from "child_process";
 import path from "path";
+import cFileController from "./cFileController";
 
 const updateLoggedInUser = async (req, user) => {
   req.session.loggedInUser = user;
@@ -121,11 +122,9 @@ export const getOneLecture = async (req, res) => {
   }
 };
 
-//postOneQuiz requires input from a txt file which would be included not in the
 export const postOneQuiz = async (req, res) => {
   try {
     const lectureId = req.params.id;
-    console.log("????", req.file);
     const lecture = await Lecture.findById(lectureId)
       .populate("noticeIds")
       .populate("quizId");
@@ -136,30 +135,14 @@ export const postOneQuiz = async (req, res) => {
     const lectureName = lecture.lectureName;
     const studentId = user.stuId;
     console.log("studentId", studentId);
-    const cfileDirectory = path.join("src", "controllers", "saveQuizsubmit");
-    console.log(filename, lectureName, studentId);
-    console.log(typeof lectureName);
+    const cfileDirectory = path.join(
+      "src",
+      "controllers",
+      "saveQuizsubmit.exe"
+    );
     //runs the saveQuizSubmit => saves temp file submite to letureName folder
-    const process = spawn(cfileDirectory, [filename, lectureName, studentId]);
-
-    const closeProcess = new Promise((resolve, reject) => {
-      process.on("close", (code) => {
-        if (code != 0) {
-          reject(new Error("Non-zero exit code"));
-        } else {
-          resolve();
-        }
-      });
-      process.stdout.on("data", (data) => {
-        console.log(`stdout: ${data}`);
-      });
-      process.stderr.on("data", (data) => {
-        console.error(`stderr: ${data}`);
-      });
-    });
-
     try {
-      await closeProcess;
+      await cFileController(cfileDirectory, [filename, lectureName, studentId]);
     } catch (error) {
       return res.status(400).render("lectureDetail", {
         pageTitle: "에러",
@@ -167,7 +150,6 @@ export const postOneQuiz = async (req, res) => {
         error,
       });
     }
-
     const grade = {
       lectureId: lectureId,
       quizId: lecture.quizId,
