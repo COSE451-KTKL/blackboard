@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     char decrypted_id[BUF_SIZE], decrypted_password[BUF_SIZE];
 
     // Ensure the strings do not exceed buffer size
-    strcpy(decrypted_id, encrypted_id);
+    strncpy(decrypted_id, encrypted_id, sizeof(decrypted_id) - 1);
     strcpy(decrypted_password, encrypted_password);
 
     // Null-terminate the strings
