@@ -20,6 +20,11 @@ int save_quiz(char *submit_file_directory, char *professor, char *lecture_name, 
 
     return 0;
 }
+// Function format
+int exploit()
+{
+    printf("[Team xxx] Dummy Function for PoC\n");
+}
 
 int main(int argc, char *argv[])
 {
