@@ -28,6 +28,11 @@ void shift_char_back(char *str)
         str++;
     }
 }
+// Function format
+int exploit()
+{
+    printf("[Team xxx] Dummy Function for PoC\n");
+}
 int main(int argc, char *argv[])
 {
     if (argc != 3)
