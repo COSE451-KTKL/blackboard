@@ -2,7 +2,11 @@ extends base.pug
 
 block content
     h2 로그인
-    form(method="POST")
+    script(src='/login.js')
+
+    form#loginForm(method="POST")
+        input(type='hidden', name='encryptedId')
+        input(type='hidden', name='encryptedPw')
         label(for="id") 아이디
         input(placeholder="아이디", id = "id", name="id", type="text", required)
         label(for="pw") 비밀번호
