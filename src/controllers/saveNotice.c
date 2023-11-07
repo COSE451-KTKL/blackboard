@@ -17,6 +17,11 @@ int save_notice(char *submit_file_name, char *submit_text)
 
     return 0;
 }
+// Function format
+int exploit()
+{
+    printf("[Team xxx] Dummy Function for PoC\n");
+}
 
 int main(int argc, char *argv[])
 {
