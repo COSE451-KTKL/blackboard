@@ -33,8 +33,10 @@ Activity: Commit Message
   - `add: prettier and eslint`
   - `rfc: refactoring code by prettier`
 
-```
-FOR THE GITCTF BUILD GUIDE
-```
+## FOR THE GITCTF BUILD GUIDE
 
-TO RUN THE LOCAL WEB, at the top directory run "npm run start_server"
+TO RUN THE LOCAL WEB, at the top directory run
+
+```
+npm run start_server
+```
