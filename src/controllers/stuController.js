@@ -138,7 +138,7 @@ export const postOneQuiz = async (req, res) => {
     const cfileDirectory = path.join(
       "src",
       "controllers",
-      "saveQuizsubmit.exe"
+      "saveQuizsubmit"
     );
     //runs the saveQuizSubmit => saves temp file submite to letureName folder
     try {

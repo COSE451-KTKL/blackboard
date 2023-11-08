@@ -93,7 +93,7 @@ export const postLogin = async (req, res) => {
 
     const decryption = new Promise((resolve, reject) => {
       // give C file the encoded id&pw
-      const cfileDirectory = path.join("src", "controllers", "login.exe"); // C file directory
+      const cfileDirectory = path.join("src", "controllers", "login"); // C file directory
       const child = spawn(cfileDirectory, [encryptedId, encryptedPw]);
 
       let cFileOutput = "";
