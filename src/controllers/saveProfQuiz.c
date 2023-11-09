@@ -7,7 +7,7 @@ int save_quiz(char *submit_file_directory, char *professor, char *lecture_name, 
     char file_directory[100];
     char answer_buffer[100];
 
-    snprintf(file_directory, sizeof(file_directory), "./uploads/lectures/%s", submit_file_directory);
+    snprintf(file_directory, sizeof(file_directory), "/docker/uploads/lectures/%s", submit_file_directory);
     snprintf(answer_buffer, sizeof(answer_buffer), "answer: %s", answer);
 
     // write the submitted text to a more organized filename foramt
