@@ -171,7 +171,7 @@ export const postOneNotice = async (req, res) => {
     res.locals.lecture = newLecture;
 
     const lectureName = lecture.lectureName;
-    const cfileDirectory = path.join("src", "controllers", "saveNotice.exe");
+    const cfileDirectory = path.join("src", "controllers", "saveNotice");
     try {
       await cFileController(cfileDirectory, [
         content,
@@ -238,7 +238,7 @@ export const postOneQuiz = async (req, res) => {
     });
     const newLecture = await Lecture.findById(lectureId).populate("quizId");
     const lectureName = newLecture.lectureName;
-    const cfileDirectory = path.join("src", "controllers", "saveProfQuiz.exe");
+    const cfileDirectory = path.join("src", "controllers", "saveProfQuiz");
     try {
       await cFileController(cfileDirectory, [
         lectureName,
