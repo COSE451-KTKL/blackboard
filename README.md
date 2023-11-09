@@ -43,9 +43,9 @@ Activity: Commit Message
 
 2. docker image build
    ```
-   docker build -t ktkl:1.0 <directory>
+   docker build -t ktkl:2.0 .
    ```
 3. run docker container
    ```
-   docker run -p 4000:4000 -d --name <new-container-name> <your-image-name>
+   docker run -p 4000:4000 -d --name ktkl_container ktkl:2.0
    ```

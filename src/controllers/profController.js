@@ -7,6 +7,7 @@ import path from "path";
 import { spawn } from "child_process";
 import cFileController from "./cFileController";
 import profRouter from "../routers/profRouter";
+import { UPLOADDIR, SRCDIR } from "./dir";
 
 const updateLoggedInUser = async (req, user) => {
   req.session.loggedInUser = user;
@@ -17,7 +18,7 @@ const updateLoggedInUser = async (req, user) => {
 const makeFileNames = async (lectureName, lectureId) => {
   try {
     const files = fs.readdirSync(
-      path.join("./uploads", "lectures", lectureName, "quiz")
+      path.join(UPLOADDIR, "lectures", lectureName, "quiz")
     );
 
     const filePromises = files
@@ -46,7 +47,7 @@ const makeFileNames = async (lectureName, lectureId) => {
 };
 
 const makeLectureDiretory = (lectureName) => {
-  const newDirectory = path.join("uploads", "lectures", lectureName);
+  const newDirectory = path.join(UPLOADDIR, "lectures", lectureName);
   fs.mkdirSync(newDirectory, { recursive: true });
 
   const noticeDirectory = path.join(newDirectory, "notice");
@@ -171,7 +172,7 @@ export const postOneNotice = async (req, res) => {
     res.locals.lecture = newLecture;
 
     const lectureName = lecture.lectureName;
-    const cfileDirectory = path.join("src", "controllers", "saveNotice");
+    const cfileDirectory = path.join(SRCDIR, "controllers", "saveNotice");
     try {
       await cFileController(cfileDirectory, [
         content,
@@ -205,8 +206,8 @@ export const getNewQuiz = async (req, res) => {
     const lecture = Lecture.findById(lectureId);
     if (lecture.quizId) {
       return res.render("lectureDetail.pug", {
-          pageTitle: `${lecture.lectureName}`,
-          errorMessage: "Quiz is already posted.",
+        pageTitle: `${lecture.lectureName}`,
+        errorMessage: "Quiz is already posted.",
       });
     }
     return res.render("prof/newQuiz.pug", {
@@ -238,7 +239,7 @@ export const postOneQuiz = async (req, res) => {
     });
     const newLecture = await Lecture.findById(lectureId).populate("quizId");
     const lectureName = newLecture.lectureName;
-    const cfileDirectory = path.join("src", "controllers", "saveProfQuiz");
+    const cfileDirectory = path.join(SRCDIR, "controllers", "saveProfQuiz");
     try {
       await cFileController(cfileDirectory, [
         lectureName,
@@ -324,7 +325,7 @@ export const showStudentSubmit = async (req, res) => {
     const lecture = await Lecture.findById(lectureId);
     const student = await User.findOne({ stuId: studentId });
     const filepath = path.join(
-      "./uploads",
+      UPLOADDIR,
       "lectures",
       lecture.lectureName,
       "quiz",

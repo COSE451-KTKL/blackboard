@@ -4,6 +4,7 @@ import Quiz from "../models/Quiz";
 import { spawn } from "child_process";
 import path from "path";
 import cFileController from "./cFileController";
+import { UPLOADDIR, SRCDIR } from "./dir";
 
 const updateLoggedInUser = async (req, user) => {
   req.session.loggedInUser = user;
@@ -124,6 +125,15 @@ export const getOneLecture = async (req, res) => {
 
 export const postOneQuiz = async (req, res) => {
   try {
+    if (!req.file) {
+      // An error occurred (likely due to fileFilter rejecting the file)
+      const error = req.fileValidationError || "Invalid file type";
+      return res.status(400).render("lectureDetail", {
+        pageTitle: "error",
+        lecture: null,
+        error: error,
+      });
+    }
     const lectureId = req.params.id;
     const lecture = await Lecture.findById(lectureId)
       .populate("noticeIds")
@@ -135,7 +145,7 @@ export const postOneQuiz = async (req, res) => {
     const lectureName = lecture.lectureName;
     const studentId = user.stuId;
     console.log("studentId", studentId);
-    const cfileDirectory = path.join("src", "controllers", "saveQuizsubmit");
+    const cfileDirectory = path.join(SRCDIR, "controllers", "saveQuizsubmit");
     //runs the saveQuizSubmit => saves temp file submite to letureName folder
     try {
       await cFileController(cfileDirectory, [filename, lectureName, studentId]);
