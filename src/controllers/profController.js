@@ -300,7 +300,7 @@ export const getLectureSubmits = async (req, res) => {
     console.log(lectureName);
     const filenames = await makeFileNames(lectureName, lectureId);
 
-    return res.render("prof/showLecturesubmits.pug", {
+    return res.render("prof/showLectureSubmits.pug", {
       pageTitle: "제출된 과제 보기",
       filenames: filenames,
       lecture: lecture,
