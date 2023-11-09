@@ -1,2 +1,2 @@
-export const UPLOADDIR = "/docker/uploads";
-export const SRCDIR = "/docker/src";
+export const UPLOADDIR = "./uploads";
+export const SRCDIR = "./src";
