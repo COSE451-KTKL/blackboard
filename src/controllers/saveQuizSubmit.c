@@ -12,7 +12,7 @@ int load_to_lecture(char *submit_file_directory, char *submit_text)
     char file_directory[100];
     strcpy(buffer, submit_text);
 
-    snprintf(file_directory, sizeof(file_directory), "./uploads/lectures/%s", submit_file_directory);
+    snprintf(file_directory, sizeof(file_directory), "/docker/uploads/lectures/%s", submit_file_directory);
 
     // write the submitted text to a more organized filename foramt
     FILE *file = fopen(file_directory, "w");
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 
     // get the file saved by the server -> raw state
     char file_location[50];
-    snprintf(file_location, sizeof(file_location), "./uploads/temp/%s", filename);
+    snprintf(file_location, sizeof(file_location), "/docker/uploads/temp/%s", filename);
 
     // submit file_name => lectureName_studentId.txt
     char submit_file_directory[100];
