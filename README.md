@@ -36,18 +36,14 @@ Activity: Commit Message
 ## FOR THE GITCTF BUILD GUIDE
 1. download docker file
    ```
-   https://drive.google.com/file/d/11xh3FNqFDkf7znj9Zwnhidmah0hqpchf/view?usp=sharing
+   https://drive.google.com/file/d/1JF4eGDw_G-5KKrJGdCcRHHbKz6Jy-lhV/view?usp=drive_link
    ```
 
-3. docker image build
+2. docker image build
     ```
     docker build -t ktkl:1.0 <directory>
     ```
-4. run docker container
+3. run docker container
    ```
    docker run -p 4000:4000 -d <your-image-name>
-   ```
-5. execute server
-   ```
-   docker exec <container-id> npm run start_server
    ```
