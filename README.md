@@ -36,7 +36,7 @@ Activity: Commit Message
 ## FOR THE GITCTF BUILD GUIDE
 1. download docker file
    ```
-   https://drive.google.com/file/d/1EJ7K-wINtk-IEXt-aRU94PnRuRjaOYIR/view?usp=drive_link
+   https://drive.google.com/file/d/11xh3FNqFDkf7znj9Zwnhidmah0hqpchf/view?usp=sharing
    ```
 
 3. docker image build
