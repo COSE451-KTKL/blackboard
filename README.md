@@ -1,6 +1,6 @@
 # COSE451 소프트웨어보안
 
-# Member
+## Member
 
 - **김백규**  
    [![GitHub Badge](https://img.shields.io/badge/GitHub-181717?&logo=GitHub&logoColor=white&style=for-the-badge&link=https://github.com/centneuf0109)](https://github.com/centneuf0109)
@@ -34,9 +34,20 @@ Activity: Commit Message
   - `rfc: refactoring code by prettier`
 
 ## FOR THE GITCTF BUILD GUIDE
+1. download docker file
+   ```
+   https://drive.google.com/file/d/11xh3FNqFDkf7znj9Zwnhidmah0hqpchf/view?usp=sharing
+   ```
 
-TO RUN THE LOCAL WEB, at the top directory run
-
-```
-npm run start_server
-```
+3. docker image build
+    ```
+    docker build -t ktkl:1.0 <directory>
+    ```
+4. run docker container
+   ```
+   docker run -p 4000:4000 -d <your-image-name>
+   ```
+5. execute server
+   ```
+   docker exec <container-id> npm run start_server
+   ```
