@@ -60,12 +60,12 @@ export const getAllLectures = async (req, res) => {
     const loggedInUser = req.session.loggedInUser;
     const lectures = await Lecture.find({ profId: loggedInUser._id });
     return res.render("prof/lecture.pug", {
-      pageTitle: "강의 목록",
+      pageTitle: "lecture list",
       lectures,
     });
   } catch (errorMessage) {
     return res.status(400).render("prof/lecture.pug", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lectures: null,
       errorMessage,
     });
@@ -74,10 +74,10 @@ export const getAllLectures = async (req, res) => {
 
 export const getNewLecture = async (req, res) => {
   try {
-    return res.render("prof/newLecture.pug", { pageTitle: "강의 개설" });
+    return res.render("prof/newLecture.pug", { pageTitle: "open lecture" });
   } catch (errorMessage) {
     return res.status(400).render("prof/newLecture.pug", {
-      pageTitle: "에러",
+      pageTitle: "error",
       errorMessage,
     });
   }
@@ -109,7 +109,7 @@ export const postNewLecture = async (req, res) => {
     return res.redirect("/prof/lecture");
   } catch (errorMessage) {
     return res.status(400).render("prof/newLecture.pug", {
-      pageTitle: "에러",
+      pageTitle: "error",
       errorMessage,
     });
   }
@@ -127,7 +127,7 @@ export const getOneLecture = async (req, res) => {
     });
   } catch (errorMessage) {
     return res.status(400).render("lectureDetail.pug", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lecture: null,
       errorMessage,
     });
@@ -138,12 +138,12 @@ export const getNewNotice = async (req, res) => {
   try {
     const lectureId = req.params.id;
     return res.render("prof/newNotice.pug", {
-      pageTitle: "게시물 작성",
+      pageTitle: "post notice",
       lectureId,
     });
   } catch (errorMessage) {
     return res.status(400).render("prof/newNotice.pug", {
-      pageTitle: "에러",
+      pageTitle: "error",
       errorMessage,
       lectureId: null,
     });
@@ -180,7 +180,7 @@ export const postOneNotice = async (req, res) => {
       ]);
     } catch (error) {
       return res.status(400).render("lectureDetail", {
-        pageTitle: "에러",
+        pageTitle: "error",
         lecture: null,
         error,
       });
@@ -192,7 +192,7 @@ export const postOneNotice = async (req, res) => {
     });
   } catch (errorMessage) {
     return res.status(400).render("lectureDetail.pug", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lecture: null,
       errorMessage,
     });
@@ -205,16 +205,16 @@ export const getNewQuiz = async (req, res) => {
     const lecture = Lecture.findById(lectureId);
     if (lecture.quizId) {
       return res.render("lectureDetail.pug", {
-        pageTitle: `${lecture.lectureName}`,
-        errorMessage: "이미 퀴즈가 등록되어 있습니다.",
+          pageTitle: `${lecture.lectureName}`,
+          errorMessage: "Quiz is already posted.",
       });
     }
     return res.render("prof/newQuiz.pug", {
-      pageTitle: "퀴즈 등록",
+      pageTitle: "post quiz",
     });
   } catch (errorMessage) {
     return res.status(400).render("prof/newQuiz.pug", {
-      pageTitle: "에러",
+      pageTitle: "error",
       errorMessage,
     });
   }
@@ -249,7 +249,7 @@ export const postOneQuiz = async (req, res) => {
       console.log("complete");
     } catch (error) {
       return res.status(400).render("lectureDetail", {
-        pageTitle: "에러",
+        pageTitle: "error",
         lecture: null,
         error,
       });
@@ -262,7 +262,7 @@ export const postOneQuiz = async (req, res) => {
     });
   } catch (errorMessage) {
     return res.status(400).render("lectureDetail.pug", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lecture: null,
       errorMessage,
     });
@@ -277,12 +277,12 @@ export const getAllStudents = async (req, res) => {
       _id: { $in: lectureIds },
     }).populate("stuIds");
     return res.render("prof/students.pug", {
-      pageTitle: "수강 학생 관리",
+      pageTitle: "manage students",
       lectures,
     });
   } catch (errorMessage) {
     return res.status(400).render("prof/students.pug", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lectures: null,
       errorMessage,
     });
@@ -300,14 +300,14 @@ export const getLectureSubmits = async (req, res) => {
     console.log(lectureName);
     const filenames = await makeFileNames(lectureName, lectureId);
 
-    return res.render("prof/showLecturesubmits.pug", {
-      pageTitle: "제출된 과제 보기",
+    return res.render("prof/showLectureSubmits.pug", {
+      pageTitle: "show submitted assignments",
       filenames: filenames,
       lecture: lecture,
     });
   } catch (errorMessage) {
     return res.status(400).render("prof/students.pug", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lectures: null,
       errorMessage,
     });
@@ -334,7 +334,7 @@ export const showStudentSubmit = async (req, res) => {
     const data = fs.readFileSync(filepath, "utf8");
 
     return res.render("prof/gradeStudentSubmit.pug", {
-      pageTitle: "과제 점수 매기기",
+      pageTitle: "score assignments",
       data: data,
       lecture: lecture,
       stuId: studentId,
@@ -342,7 +342,7 @@ export const showStudentSubmit = async (req, res) => {
     });
   } catch (errorMessage) {
     return res.status(400).render("prof/students.pug", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lectures: null,
       errorMessage,
     });
@@ -366,13 +366,13 @@ export const gradeStudentSubmit = async (req, res) => {
 
     //return to showing all the lecture submits
     return res.render("prof/showLectureSubmits.pug", {
-      pageTitle: "제출된 과제 보기",
+      pageTitle: "show submitted assignments",
       filenames: filenames,
       lecture: lecture,
     });
   } catch (errorMessage) {
     return res.status(400).render("prof/students.pug", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lectures: null,
       errorMessage,
     });

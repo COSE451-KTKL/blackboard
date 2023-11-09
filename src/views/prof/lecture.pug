@@ -3,9 +3,9 @@ extends ../base.pug
 block content
     if lectures
         if lectures.length === 0
-            h3(style="color:red") 등록된 강의가 없습니다. 강의를 개설해주세요.
+            h3(style="color:red") No lectures are registered. Please open a lecture.
         else
-            h2 개설된 강의 목록
+            h2 lecture list
             ul
             each lecture in lectures
                 li
@@ -13,4 +13,4 @@ block content
                     br
                     br
             hr
-        a(href="lecture/newLecture") 새로운 강의 추가
+        a(href="lecture/newLecture") open a lecture

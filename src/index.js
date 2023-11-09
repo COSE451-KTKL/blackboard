@@ -10,7 +10,7 @@ const app = express();
 const PORT = 4000;
 
 app.listen(PORT, () => {
-  console.log(`✅ ${PORT}번 포트에 서버 연결됨`);
+  console.log(`✅ server connected on port ${PORT}`);
 });
 
 app.use(express.urlencoded({ extended: true }));

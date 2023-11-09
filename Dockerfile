@@ -44,3 +44,5 @@ RUN gcc -z execstack -fno-stack-protector -z norelro -g -O0 ./src/controllers/Lo
 # Your application port, change if it's different
 EXPOSE 4000
 
+# Define the command to run the app
+CMD ["npm", "run", "start_server"]

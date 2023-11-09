@@ -19,57 +19,58 @@ block headContent
 
 block content
     if lecture
-        h1 #{lecture.lectureName} 강의 페이지
+        h1 #{lecture.lectureName} lecture page
         hr
         h2 게시물
         if lecture.noticeIds.length === 0
             if loggedInUser.userType === 'professor'
-                h3(style="color:red") 아직 게시물이 없습니다. 학생들을 위해 첫 게시물을 등록해주세요.
+                h3(style="color:red") No posts yet. Please register your first post for students.
             else
-                h3(style="color:red") 아직 게시물이 없습니다. 교수님께 문의하세요.
+                h3(style="color:red") No posts yet. Ask the professor.
         else
             ul
                 each noticeId in lecture.noticeIds
                     li
                         span(class="forConvertToHtml", style="display:none")= noticeId.content
-                        h5 등록 시간: #{noticeId.createdAt}
+                        h5 posted time: #{noticeId.createdAt}
                         p(class="noticeContent") 
                         hr
         hr
-        h2 퀴즈
+        h2 quiz
         if !lecture.quizId
             if loggedInUser.userType === 'professor'
-                h3(style="color:red") 아직 퀴즈가 없습니다. 학생들을 위해 퀴즈를 등록해주세요.
+                h3(style="color:red") We don't have a quiz yet. Please register for a quiz for students.
             else
-                h3(style="color:red") 아직 퀴즈가 없습니다. 교수님께 문의하세요.
+                h3(style="color:red") We don't have a quiz yet. Ask the professor.
         else
             if loggedInUser.userType === 'professor'
-                h3 등록된 문제
+                h3 posted question
                 p= lecture.quizId.quizProblem
                 br
                 a(href=`/prof/lecture/showLectureSubmits/${lecture._id}`) 퀴즈 채점하러 가기
             else
                 if submitted
                     if grade.graded 
-                        h3(style="color:red")= `your grade: ${grade.grade}`
+                        h3(style="color:red") your grade: #{grade.grade}
                     if !grade.graded
-                        h3(style="color:red")="아직 채점되지 않았습니다"
+                        h3(style="color:red") It hasn't been graded yet
                 else
-                    h3 문제
+                    h3 problem
                     p= lecture.quizId.quizProblem
+                    p Please submit the txt file
                     form(method="POST", enctype="multipart/form-data")
-                        input(type="file", name="txtFile", id="txtFile", placeholder="txt 파일을 제출하세요", required)
-                        input(type="submit", value="답안 제출")
+                        input(type="file", name="txtFile", id="txtFile", placeholder="Please submit the txt file", required)
+                        input(type="submit", value="submit")
             hr
         if loggedInUser.userType === 'professor'
-            a(href=`/prof/lecture/newNotice/${lecture._id}`) 새 게시물 등록하러 가기
+            a(href=`/prof/lecture/newNotice/${lecture._id}`) post new notice
             br
             if lecture.quizId
             else
-                a(href=`/prof/lecture/newQuiz/${lecture._id}`) 퀴즈 등록하러 가기
+                a(href=`/prof/lecture/newQuiz/${lecture._id}`) post new quiz
             br
             br
             br
-            a(href="/prof/lecture") 개설한 강의 목록 보러가기
+            a(href="/prof/lecture") Go to the list of courses you've opened
         else
-            a(href="/stu/lecture") 수강중인 강의 목록 보러가기
+            a(href="/stu/lecture") Go to the list of courses you are taking

@@ -10,11 +10,11 @@ const loginUserToSession = async (req, user) => {
 
 export const getSignup = (req, res) => {
   try {
-    return res.render("signup", { pageTitle: "회원가입" });
+    return res.render("signup", { pageTitle: "signup" });
   } catch (errorMessage) {
     return res
       .status(400)
-      .render("signup", { pageTitle: "에러", errorMessage });
+      .render("signup", { pageTitle: "error", errorMessage });
   }
 };
 
@@ -27,27 +27,27 @@ export const postSignup = async (req, res) => {
 
     if (userType === "student" && !stuId) {
       return res.render("signup", {
-        pageTitle: "회원가입",
-        errorMessage:
-          "학생 회원은 학번을 반드시 입력해야 합니다. 다시 시도해주세요.",
+          pageTitle: "signup",
+          errorMessage:
+              "Student account must enter their school number. Please try again.",
       });
     }
 
     const existsId = await User.exists({ id });
     if (existsId) {
       return res.status(400).render("signup", {
-        pageTitle: "회원가입",
-        errorMessage:
-          "같은 아이디를 가진 계정이 이미 존재합니다. 다시 시도해주세요.",
+          pageTitle: "signup",
+          errorMessage:
+              "An account with the same ID already exists. Please try again.",
       });
     }
     const existsStuId =
       (await User.exists({ stuId })) && userType === "student";
     if (existsStuId) {
       return res.status(400).render("signup", {
-        pageTitle: "회원가입",
-        errorMessage:
-          "같은 학번을 가진 계정이 이미 존재합니다. 다시 시도해주세요.",
+          pageTitle: "signup",
+          errorMessage:
+              "An account with the same student number already exists. Please try again.",
       });
     }
 
@@ -65,7 +65,7 @@ export const postSignup = async (req, res) => {
     return res.redirect("/");
   } catch (errorMessage) {
     return res.status(400).render("signup", {
-      pageTitle: "에러",
+      pageTitle: "error",
       errorMessage,
     });
   }
@@ -73,9 +73,9 @@ export const postSignup = async (req, res) => {
 
 export const getLogin = (req, res) => {
   try {
-    return res.render("login", { pageTitle: "로그인" });
+    return res.render("login", { pageTitle: "login" });
   } catch (errorMessage) {
-    return res.status(400).render("login", { pageTitle: "에러", errorMessage });
+    return res.status(400).render("login", { pageTitle: "error", errorMessage });
   }
 };
 
@@ -85,9 +85,9 @@ export const postLogin = async (req, res) => {
     console.log(id, pw, encryptedId, encryptedPw);
     if (!encryptedId || !encryptedPw) {
       return res.status(400).render("login", {
-        pageTitle: "로그인",
-        errorMessage:
-          "ID와 비밀번호를 모두 제공해야 합니다. 다시 시도해주세요.",
+          pageTitle: "login",
+          errorMessage:
+              "You must provide both your ID and password. Please try again.",
       });
     }
 
@@ -121,8 +121,8 @@ export const postLogin = async (req, res) => {
     const user = await User.findOne({ id: decryptedId });
     if (!user) {
       return res.status(400).render("login", {
-        pageTitle: "로그인",
-        errorMessage: "계정이 존재하지 않습니다. 다시 시도해주세요.",
+          pageTitle: "login",
+          errorMessage: "Account does not exist. Please try again.",
       });
     }
 
@@ -130,8 +130,8 @@ export const postLogin = async (req, res) => {
     console.log(ok);
     if (!ok) {
       return res.status(400).render("login", {
-        pageTitle: "로그인",
-        errorMessage: "비밀번호가 올바르지 않습니다. 다시 시도해주세요.",
+          pageTitle: "login",
+          errorMessage: "The password is not valid. Please try again.",
       });
     }
     await loginUserToSession(req, user);
@@ -139,7 +139,7 @@ export const postLogin = async (req, res) => {
     return res.redirect("/");
   } catch (errorMessage) {
     return res.status(400).render("login", {
-      pageTitle: "에러",
+      pageTitle: "error",
       errorMessage,
     });
   }
@@ -149,7 +149,7 @@ export const getLogout = async (req, res) => {
   await req.session.destroy((err) => {
     if (err) {
       return res.status(400).render("home", {
-        pageTitle: "에러",
+        pageTitle: "error",
         errorMessage,
       });
     } else {
