@@ -145,7 +145,7 @@ export const postOneQuiz = async (req, res) => {
     const lectureName = lecture.lectureName;
     const studentId = user.stuId;
     console.log("studentId", studentId);
-    const cfileDirectory = path.join(SRCDIR, "controllers", "saveQuizsubmit");
+    const cfileDirectory = path.join(SRCDIR, "controllers", "saveQuizSubmit");
     //runs the saveQuizSubmit => saves temp file submite to letureName folder
     try {
       await cFileController(cfileDirectory, [filename, lectureName, studentId]);
