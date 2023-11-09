@@ -37,8 +37,8 @@ block headContent
 
 block content
   if lectureId
-    h2 게시물 등록
+    h2 post notice
     div(id="editor")
     form(method="POST", id="noticeForm", onsubmit="return sendNoticeContent();")
       input(type="hidden", id="content", name="content")
-      input(type="submit", value="게시물 등록")
+      input(type="submit", value="post notice")

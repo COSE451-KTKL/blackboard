@@ -1,18 +1,18 @@
 extends base.pug
 
 block content
-    h2 로그인
+    h2 login
     script(src='/login.js')
 
     form#loginForm(method="POST")
         input(type='hidden', name='encryptedId')
         input(type='hidden', name='encryptedPw')
-        label(for="id") 아이디
-        input(placeholder="아이디", id = "id", name="id", type="text", required)
-        label(for="pw") 비밀번호
-        input(placeholder="비밀번호", id = "pw", name="pw", type="password", required)
+        label(for="id") id
+        input(placeholder="id", id = "id", name="id", type="text", required)
+        label(for="pw") pw
+        input(placeholder="pw", id = "pw", name="pw", type="password", required)
         input(type="submit", value="Login")
 
     div
-        span 아직 계정이 없으신가요?
-        a(href="/auth/signup") 회원가입 &rarr;
+        span Don't you have an account yet?
+        a(href="/auth/signup") signup &rarr;

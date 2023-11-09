@@ -2,20 +2,20 @@ extends ../base.pug
 block content
     if lectures
         if lectures.length === 0
-            h3(style="color:red") 등록된 강의가 없습니다. 강의를 개설해주세요.
+            h3(style="color:red") No lectures are registered. Please open a lecture.
         else
-            h2 수강 학생 관리
+            h2 manage students
             for lecture in lectures
                 hr
                 table(border="1")
                     thead
-                        th 이름
-                        th 학번
+                        th name
+                        th student id
                     tbody
                         if lecture.stuIds.length === 0
-                            h3(style="color:red") 아직 해당 강의를 수강 신청한 학생이 없습니다.
+                            h3(style="color:red") No students have registered for the course yet.
                         else
-                            h3 #{lecture.lectureName} 강의를 수강중인 학생 목록
+                            h3 #{lecture.lectureName} : List of students taking a course
                             for student in lecture.stuIds
                                 tr    
                                     td

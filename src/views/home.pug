@@ -2,19 +2,19 @@ extends base.pug
 
 block content
     if loggedInUser
-        h1=loggedInUser.name+"님 환영합니다!"
+        h1 Welcome #{loggedInUser.name}!
         if loggedInUser.userType == "student"
             ul
                 li
-                    a(href="stu/sugang") 수강신청
+                    a(href="stu/sugang") enroll
                 li
-                    a(href="stu/lecture") 수강중인 강의 목록
+                    a(href="stu/lecture") enroll lectures
         else
             ul
                 li
-                    a(href="prof/lecture") 강의 관리
+                    a(href="prof/lecture") manage lectures
                 li
-                    a(href="prof/student") 수강 학생 관리
+                    a(href="prof/student") manage students
 
     else 
         h1 blackboard

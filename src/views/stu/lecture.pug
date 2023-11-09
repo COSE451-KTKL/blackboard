@@ -3,9 +3,9 @@ extends ../base.pug
 block content
     if lectures
         if lectures.length === 0
-            h3(style="color:red") 수강중인 강의가 없습니다. 강의를 수강해주세요.
+            h3(style="color:red") No lectures are being taken. Please take a lecture.
         else
-            h2 수강중인 강의 목록
+            h2 sugang lectures
             ul
             each lecture in lectures
                 li
@@ -13,4 +13,4 @@ block content
                     br
                     br
             hr
-        a(href="/stu/sugang") 수강신청하러 가기
+        a(href="/stu/sugang") go to enroll

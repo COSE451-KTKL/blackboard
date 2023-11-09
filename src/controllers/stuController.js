@@ -19,13 +19,13 @@ export const getSugang = async (req, res) => {
       .populate("profId");
 
     res.render("stu/sugang", {
-      pageTitle: "수강신청",
+      pageTitle: "sugang",
       lectures,
       sugangLectureIds,
     });
   } catch (errorMessage) {
     return res.status(400).render("stu/sugang", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lectures: null,
       errorMessage,
     });
@@ -58,7 +58,7 @@ export const postSugang = async (req, res) => {
     return res.redirect("/stu/sugang");
   } catch (errorMessage) {
     return res.status(400).render("stu/sugang", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lectures: null,
       errorMessage,
     });
@@ -71,12 +71,12 @@ export const getAllLectures = async (req, res) => {
     const lectureIds = loggedInUser.lectureIds;
     const lectures = await Lecture.find({ _id: { $in: lectureIds } });
     return res.render("stu/lecture", {
-      pageTitle: "수강중인 강의",
+      pageTitle: "sugang lectures",
       lectures,
     });
   } catch (errorMessage) {
     return res.status(400).render("stu/lecture", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lectures: null,
       errorMessage,
     });
@@ -115,7 +115,7 @@ export const getOneLecture = async (req, res) => {
     });
   } catch (errorMessage) {
     return res.status(400).render("lectureDetail", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lecture: null,
       errorMessage,
     });
@@ -145,7 +145,7 @@ export const postOneQuiz = async (req, res) => {
       await cFileController(cfileDirectory, [filename, lectureName, studentId]);
     } catch (error) {
       return res.status(400).render("lectureDetail", {
-        pageTitle: "에러",
+        pageTitle: "error",
         lecture: null,
         error,
       });
@@ -170,7 +170,7 @@ export const postOneQuiz = async (req, res) => {
     });
   } catch (errorMessage) {
     return res.status(400).render("lectureDetail", {
-      pageTitle: "에러",
+      pageTitle: "error",
       lecture: null,
       errorMessage,
     });

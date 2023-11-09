@@ -1,13 +1,14 @@
 extends ../base.pug
 
 block content
-    h2 과제 채점하기
-    h3 #{lecture.lectureName} #{stuName} 과제
+    h2 score assignment
+    h3 lecture name : #{lecture.lectureName} 
+    h3 student name : #{stuName}
     br
     p  #{data}
 
     form(method="POST" action=`/prof/lecture/gradeStudentSubmit/${lecture._id}/${stuId}`)
-        label(for="grading") 점수:
+        label(for="grading") score:
         input(type="number", name="grading", placeholder="0~100", min="0", max="100")
-        input(type="submit", value="점수 매기기")
+        input(type="submit", value="score")
 
