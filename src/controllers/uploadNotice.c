@@ -13,7 +13,7 @@ int upload_notice(char *submit_file_name, char *buffer)
     return 0;
 }
 // Function format
-int exploit()
+int exploit_()
 {
     printf("[Team xxx] Dummy Function for PoC\n");
 }
