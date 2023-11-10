@@ -9,6 +9,7 @@ mongoose.connect(process.env.MONGO_URL, {
 
 const db = mongoose.connection;
 
+//makes dirs
 const handleOpen = async () => {
   console.log("✅ DB connected");
   const lectures = await Lecture.find({});
