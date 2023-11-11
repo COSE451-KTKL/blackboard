@@ -46,6 +46,9 @@ Activity: Commit Message
    docker build -t ktkl:2.0 .
    ```
 3. run docker container
+
    ```
    docker run -p 4000:4000 -d --name ktkl_container ktkl:2.0
    ```
+
+4. open localhost:4000/ => our homepage
