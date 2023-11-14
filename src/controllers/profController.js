@@ -90,6 +90,18 @@ export const postNewLecture = async (req, res) => {
     const { loggedInUser } = req.session;
     const { lectureIds } = loggedInUser;
 
+    if (!lectureName || lectureName.trim() === "") {
+      return res.status(400).render("prof/newLecture.pug", {
+        pageTitle: "error",
+        errorMessage: "There is no lecture name",
+      });
+    }
+    if (lectureName.length > 20) {
+      return res.status(400).render("prof/newLecture.pug", {
+        pageTitle: "error",
+        errorMessage: "The lecture name is too long",
+      });
+    }
     const newLecture = await Lecture.create({
       profId: loggedInUser._id,
       stuIds: [],
@@ -122,6 +134,7 @@ export const getOneLecture = async (req, res) => {
     const lecture = await Lecture.findById(lectureId)
       .populate("noticeIds")
       .populate("quizId");
+
     return res.render("lectureDetail.pug", {
       pageTitle: `${lecture.lectureName}`,
       lecture,
