@@ -2,11 +2,12 @@ extends base.pug
 
 block content
     h2 login
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js")
     script(src='/login.js')
-
+    
     form#loginForm(method="POST")
-        input(type='hidden', name='encryptedId')
-        input(type='hidden', name='encryptedPw')
+        input(type='hidden', name='AESId')
+        input(type='hidden', name='AESPw')
         label(for="id") id
         input(placeholder="id", id = "id", name="id", type="text", required)
         label(for="pw") pw
