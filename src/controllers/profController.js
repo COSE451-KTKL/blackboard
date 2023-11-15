@@ -97,6 +97,7 @@ export const postNewLecture = async (req, res) => {
       });
     }
     if (lectureName.length > 20) {
+      //this is the additional countermeasures for too long lecture Name
       return res.status(400).render("prof/newLecture.pug", {
         pageTitle: "error",
         errorMessage: "The lecture name is too long",

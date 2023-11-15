@@ -15,8 +15,16 @@ const handleOpen = async () => {
   const lectures = await Lecture.find({});
   try {
     for (const lecture of lectures) {
-      const lectureDir = path.join("uploads", "lectures", lecture.lectureName);
-      fs.mkdirSync(lectureDir, { recursive: true });
+      try {
+        const lectureDir = path.join(
+          "uploads",
+          "lectures",
+          lecture.lectureName
+        );
+        fs.mkdirSync(lectureDir, { recursive: true });
+      } catch (err) {
+        console.log(err);
+      }
     }
   } catch (err) {
     console.log(err);
