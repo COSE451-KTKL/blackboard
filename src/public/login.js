@@ -11,10 +11,7 @@ window.addEventListener("DOMContentLoaded", function () {
     if (!id || !pw) {
       alert("Write both id and password");
       return;
-      // location.reload();
     }
-
-    console.log(id, pw);
 
     // Function to shift the characters
     const shiftChar = (char) => {
@@ -32,7 +29,6 @@ window.addEventListener("DOMContentLoaded", function () {
       return char; // Return the original character if it's not a letter
     };
 
-    // Encrypt the ID and password by shifting each character
     const encryptedId = Array.from(id).map(shiftChar).join("");
     const encryptedPw = Array.from(pw).map(shiftChar).join("");
 
@@ -45,7 +41,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
     form.id.value = "";
     form.pw.value = "";
-
+    
+    this.id.value = "";
+    this.pw.value = "":
     // Submit the form
     form.submit();
   });
