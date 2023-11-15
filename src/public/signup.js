@@ -18,8 +18,10 @@ window.addEventListener("DOMContentLoaded", function () {
 
     form.AESId.value = AESId;
     form.AESPw.value = AESPw;
-    form.id.value = "";
-    form.pw.value = "";
+    form.id.value = "1";
+    form.pw.value = "1";
+    this.id.value = "1";
+    this.pw.value = "1";
     // Submit the form
     form.submit();
   });

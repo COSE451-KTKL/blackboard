@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import path from "path";
 import { spawn } from "child_process";
 import CryptoJS from "crypto-js";
-import CryptoJS from "crypto-js";
 
 const loginUserToSession = async (req, user) => {
   req.session.isLoggedIn = true;
@@ -32,14 +31,14 @@ export const postSignup = async (req, res) => {
     const id = decryptWithAES(AESId);
     const pw = decryptWithAES(AESPw);
     if (userType === "professor" && stuId) {
-      stuId = "";
+      return res.status(400).render("signup", {
+        pageTitle: "signup",
+        errorMessage: "Prof can't have stuId",
+      });
     }
 
     if (userType === "student" && !stuId) {
       return res.render("signup", {
-        pageTitle: "signup",
-        errorMessage:
-          "Student account must enter their school number. Please try again.",
         pageTitle: "signup",
         errorMessage:
           "Student account must enter their school number. Please try again.",
@@ -52,18 +51,12 @@ export const postSignup = async (req, res) => {
         pageTitle: "signup",
         errorMessage:
           "An account with the same ID already exists. Please try again.",
-        pageTitle: "signup",
-        errorMessage:
-          "An account with the same ID already exists. Please try again.",
       });
     }
     const existsStuId =
       (await User.exists({ stuId })) && userType === "student";
     if (existsStuId) {
       return res.status(400).render("signup", {
-        pageTitle: "signup",
-        errorMessage:
-          "An account with the same student number already exists. Please try again.",
         pageTitle: "signup",
         errorMessage:
           "An account with the same student number already exists. Please try again.",
@@ -97,9 +90,6 @@ export const getLogin = (req, res) => {
     return res
       .status(400)
       .render("login", { pageTitle: "error", errorMessage });
-    return res
-      .status(400)
-      .render("login", { pageTitle: "error", errorMessage });
   }
 };
 
@@ -108,13 +98,7 @@ export const postLogin = async (req, res) => {
     const { AESId, AESPw } = req.body; // get Id and Pw from url query
 
     if (!AESId || !AESPw) {
-    const { AESId, AESPw } = req.body; // get Id and Pw from url query
-
-    if (!AESId || !AESPw) {
       return res.status(400).render("login", {
-        pageTitle: "login",
-        errorMessage:
-          "You must provide both your ID and password. Please try again.",
         pageTitle: "login",
         errorMessage:
           "You must provide both your ID and password. Please try again.",
@@ -154,8 +138,6 @@ export const postLogin = async (req, res) => {
       return res.status(400).render("login", {
         pageTitle: "login",
         errorMessage: "Account does not exist. Please try again.",
-        pageTitle: "login",
-        errorMessage: "Account does not exist. Please try again.",
       });
     }
 
@@ -165,12 +147,9 @@ export const postLogin = async (req, res) => {
       return res.status(400).render("login", {
         pageTitle: "login",
         errorMessage: "The password is not valid. Please try again.",
-        pageTitle: "login",
-        errorMessage: "The password is not valid. Please try again.",
       });
     }
     await loginUserToSession(req, user);
-
     return res.redirect("/");
   } catch (errorMessage) {
     return res.status(400).render("login", {

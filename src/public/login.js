@@ -41,9 +41,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
     form.id.value = "";
     form.pw.value = "";
-    
+
     this.id.value = "";
-    this.pw.value = "":
+    this.pw.value = "";
     // Submit the form
     form.submit();
   });
