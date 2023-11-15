@@ -2,13 +2,20 @@ extends base.pug
 
 block content
     h2 signup
-    form(method="POST")
+    script(type="module" src='/signup.js')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js")
+    
+    form#signupForm(method="POST")
         label(for="id") id
         input(placeholder="id", id = "id", name="id", type="text", required)
         label(for="pw") pw
         input(placeholder="pw", id = "pw",name="pw", type="text", required)
         label(for="id") name
         input(placeholder="name", id = "name", name="name", type="text", required)
+        input(type='hidden', name='AESId')
+        input(type='hidden', name='AESPw')
+        
+        
         fieldset
             legend Please select the user type
             div
@@ -20,3 +27,4 @@ block content
         label(for="id") student id
         input(placeholder="Enter only if you are a student id", id = "stuId", name="stuId", type="text")
         input(type="submit", name="signup", value="signup")
+        
