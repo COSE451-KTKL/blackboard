@@ -316,15 +316,15 @@ export const getLectureSubmits = async (req, res) => {
     const filenames = await makeFileNames(lectureName, lectureId);
 
     const validFiles = [];
-
+    console.log(filenames);
     if (filenames) {
       for (const file of filenames) {
-        const studentId = file.student.stuId;
-        const student = User.find({ stuId: studentId });
+        const studentId = file.student._id;
 
         // Check if the student is enrolled in the lecture
         const isEnrolled = lecture.stuIds.some((stuId) => {
-          return String(stuId) == String(student._id);
+          console.log("debug", stuId, studentId);
+          return String(stuId) == String(studentId);
         });
         if (isEnrolled) {
           validFiles.push(file);
