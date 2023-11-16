@@ -319,9 +319,7 @@ export const getLectureSubmits = async (req, res) => {
 
     if (filenames) {
       for (const file of filenames) {
-        const [lectureName, studentIdWithExtension] = file.split("_");
-        const studentId = studentIdWithExtension.replace(".txt", "");
-
+        const studentId = file.student.stuId;
         // Check if the student is enrolled in the lecture
         const isEnrolled = lecture.stuIds.some((stu) => stu.stuId == studentId);
         if (isEnrolled) {
