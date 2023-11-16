@@ -315,9 +315,27 @@ export const getLectureSubmits = async (req, res) => {
     console.log(lectureName);
     const filenames = await makeFileNames(lectureName, lectureId);
 
+    const validFiles = [];
+    console.log(filenames);
+    if (filenames) {
+      for (const file of filenames) {
+        const studentId = file.student._id;
+
+        // Check if the student is enrolled in the lecture
+        const isEnrolled = lecture.stuIds.some((stuId) => {
+          console.log("debug", stuId, studentId);
+          return String(stuId) == String(studentId);
+        });
+        if (isEnrolled) {
+          validFiles.push(file);
+        }
+      }
+    }
+    console.log(validFiles);
+
     return res.render("prof/showLectureSubmits.pug", {
       pageTitle: "show submitted assignments",
-      filenames: filenames,
+      filenames: validFiles,
       lecture: lecture,
     });
   } catch (errorMessage) {
