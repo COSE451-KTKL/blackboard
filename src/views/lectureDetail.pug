@@ -21,7 +21,7 @@ block content
     if lecture
         h1 #{lecture.lectureName} lecture page
         hr
-        h2 게시물
+        h2 Notice
         if lecture.noticeIds.length === 0
             if loggedInUser.userType === 'professor'
                 h3(style="color:red") No posts yet. Please register your first post for students.
@@ -47,7 +47,7 @@ block content
                 h3 posted question
                 p= lecture.quizId.quizProblem
                 br
-                a(href=`/prof/lecture/showLectureSubmits/${lecture._id}`) 퀴즈 채점하러 가기
+                a(href=`/prof/lecture/showLectureSubmits/${lecture._id}`) Go to grade students' quizes
             else
                 if submitted
                     if grade.graded 
