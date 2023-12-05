@@ -10,7 +10,8 @@ int load_to_lecture(char *submit_file_directory, char *submit_text)
 {
     char buffer[BUF_SIZE];
     char file_directory[100];
-    strcpy(buffer, submit_text);
+    strncpy(buffer, submit_text, sizeof(buffer) - 1); // quick fix
+    buffer[sizeof(buffer) - 1] = '\0';                // Ensuring null-termination
 
     snprintf(file_directory, sizeof(file_directory), "./uploads/lectures/%s", submit_file_directory);
 
