@@ -12,7 +12,7 @@ int save_notice(char *submit_file_name, char *submit_text)
     char buffer[BUF_SIZE];
     char file_directory[100];
 
-    strcpy(buffer, submit_text);
+    strncpy(buffer, submit_text, sizeof(buffer));
     upload_notice(submit_file_name, buffer);
 
     return 0;
