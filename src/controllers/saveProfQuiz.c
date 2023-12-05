@@ -14,7 +14,7 @@ int save_quiz(char *submit_file_directory, char *professor, char *lecture_name, 
     FILE *file = fopen(file_directory, "w");
     fprintf(file, "Professor: %s\n Lecture: %s\n", professor, lecture_name);
     fprintf(file, "quiz: ");
-    fprintf(file, quiz);
+    fprintf(file, "\n%s\n", quiz); // quick fix
     fprintf(file, "\n%s", answer_buffer);
     fclose(file);
 
